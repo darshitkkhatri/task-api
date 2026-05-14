@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: task-api
+    ports:
+      - "8089:8089"
+    environment:
+      - PORT=8089
+      - DB_PATH=/app/data/tasks.db
+      - JWT_SECRET=my-super-secret-key-that-is-32-chars!!
+      - TOKEN_EXPIRY_HRS=24
+      - ENV=development
+      - READ_TIMEOUT=5
+      - WRITE_TIMEOUT=10
+    volumes:
+      - task-api-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  task-api-data:
