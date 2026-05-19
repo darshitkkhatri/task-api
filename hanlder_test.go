@@ -97,8 +97,7 @@ func TestHandler_CreateTask_InvalidBody(t *testing.T) {
 func TestHandler_CreateTask_TitleTooLong(t *testing.T) {
 	h := setupHandler(t)
 
-	// use real characters instead of null bytes
-	longTitle := strings.Repeat("a", 200)
+	longTitle := strings.Repeat("a", 101) // ← 101 characters, over the 100 limit
 	rr := makeRequest(t, h.createTask, "POST", "/tasks", map[string]string{
 		"title": longTitle,
 	})

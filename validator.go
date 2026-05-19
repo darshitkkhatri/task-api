@@ -1,5 +1,7 @@
 package main
 
+import "strings"
+
 type CreateTaskInput struct {
 	Title string `json:"title"`
 }
@@ -10,15 +12,30 @@ type UpdateTaskInput struct {
 }
 
 func (input *CreateTaskInput) validate() map[string]string {
-	if input == nil || input.Title == "" {
-		return map[string]string{"title": "Title is required"}
+	errs := make(map[string]string)
+
+	title := strings.TrimSpace(input.Title)
+
+	if title == "" {
+		errs["title"] = "Title is required"
+	} else if len([]rune(title)) > 100 { // ← count characters not bytes
+		errs["title"] = "title must be under 100 characters"
 	}
-	return nil
+
+	return errs
+
 }
 
 func (input *UpdateTaskInput) validate() map[string]string {
-	if input == nil || (input.Title == "" && !input.Done) {
-		return map[string]string{"field": "At least one field (title or done) must be provided"}
+	errs := make(map[string]string)
+
+	title := strings.TrimSpace(input.Title)
+
+	if title == "" {
+		errs["title"] = "Title is required"
+	} else if len([]rune(title)) > 100 { // ← count characters not bytes
+		errs["title"] = "title must be under 100 characters"
 	}
-	return nil
+
+	return errs
 }
