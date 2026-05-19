@@ -1,3 +1,22 @@
+
 .env
+
+# database files
 *.db
-tmp/
+*.db-shm
+*.db-wal
+
+# backup files
+*.tar.gz
+*.zip
+
+# Go build output
+/api
+/server
+
+# Mac files
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/

@@ -120,3 +120,10 @@ func (h *Handler) deleteTask(w http.ResponseWriter, r *http.Request) {
 	}
 	writeJSON(w, http.StatusOK, map[string]string{"message": "task deleted"})
 }
+
+func (h *Handler) healthCheck(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, map[string]string{
+		"status":  "ok",
+		"version": "1.0",
+	})
+}

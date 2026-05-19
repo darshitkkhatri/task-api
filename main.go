@@ -63,6 +63,7 @@ func main() {
 	// public
 	mux.HandleFunc("POST /auth/register", authHandler.register)
 	mux.HandleFunc("POST /auth/login", authHandler.login)
+	mux.HandleFunc("GET /health", taskHandler.healthCheck)
 
 	// protected
 	protected := http.NewServeMux()
@@ -74,7 +75,6 @@ func main() {
 
 	mux.Handle("/tasks", authMiddleware(protected, cfg))
 	mux.Handle("/tasks/", authMiddleware(protected, cfg))
-
 	// server
 	server := &http.Server{
 		Addr:         ":" + cfg.Port,
